@@ -24,21 +24,27 @@ public:
         return prev;
 
     }
-    ListNode* getKthNode(ListNode* temp, int  k){
-        k-=1;
-        while(temp!=NULL && k>0){
-            k--;
-            temp = temp->next;
-        }
-        return temp;
-    }
+    // ListNode* getKthNode(ListNode* temp, int  k){
+    //     k-=1;
+    //     while(temp!=NULL && k>0){
+    //         k--;
+    //         temp = temp->next;
+    //     }
+    //     return temp;
+    // }
     ListNode* reverseKGroup(ListNode* head, int k) {
         ListNode* temp = head;
         ListNode* prevlast = NULL;
         
         while(temp!=NULL)
         {
-            ListNode* kThNode = getKthNode(temp,k);
+            int cnt=1;
+            ListNode* kThNode = temp;
+            while(kThNode!=NULL && cnt!=k)
+            {
+                cnt++;
+                kThNode =kThNode->next;
+            }
             if(kThNode == NULL){
                 if(prevlast) prevlast->next = temp;
                 break;
