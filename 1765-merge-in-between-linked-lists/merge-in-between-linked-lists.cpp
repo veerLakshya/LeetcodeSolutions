@@ -19,11 +19,12 @@ public:
         {
             if(cnt==a-1)
             temp1 = temp;
-            if(cnt==b+1)
-            temp2 = temp;
+            if(cnt==b+1){
+                temp2 = temp;
+                break;    
+            }
             cnt++;
             temp=temp->next;
-
         }
         temp=list2;
         while(temp->next!=NULL)
