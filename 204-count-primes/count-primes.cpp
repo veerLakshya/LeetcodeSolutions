@@ -1,8 +1,6 @@
 class Solution {
 public:
-    int sieve(long long n) {
-
-        vector<bool> isprime(n,true);
+    int countPrimes(int n) { vector<bool> isprime(n,true);
         // isprime[0] =false;
         // isprime[1] = false;
         for (int i = 2; i < n; i++) {
@@ -16,7 +14,5 @@ public:
             if (isprime[i])
                 cnt++;
         }
-        return cnt;
-    }
-    int countPrimes(int n) { return sieve(n); }
+        return cnt; }
 };
