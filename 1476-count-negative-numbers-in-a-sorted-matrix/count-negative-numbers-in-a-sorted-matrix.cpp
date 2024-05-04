@@ -5,9 +5,20 @@ public:
         int n=grid.size();
         int m=grid[0].size();
         for(int i=0;i<n;i++){
-        for(int j=0;j<m;j++){
-            if(grid[i][j]<0)ans++;
-        }
+            int low = 0;
+            int high = m-1;
+            int add=0;
+            while(low<=high){
+                int mid=(low+high)/2;
+                if(grid[i][mid]<0){
+                    add= m-mid;
+                    high=mid-1;
+                }
+                else
+                    low=mid+1;
+            }
+            // cout<<"[add"<<"="<<add<<" ans="<<ans<<" ]";
+            ans=ans +add;
         }
         return ans;
     }
