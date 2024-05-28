@@ -11,20 +11,18 @@ public:
         int n=grid.size();
         int m=grid[0].size();
         vector<vector<int>>dp(n+1,vector<int> (m+1,-1));
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(i==0 && j==0)dp[i][j]=grid[i][j];
-                else{
-                    int up = grid[i][j];
-                    int left = grid[i][j];
-                    if(i>0)up+=dp[i-1][j];
-                    else up+=1e9;
-                    if(j>0)left+=dp[i][j-1];
-                    else left+=1e9;
-                    dp[i][j]=min(up,left);
-                }
+        dp[n-1][m-1]=grid[n-1][m-1];
+        for(int i=n-2;i>=0;i--){
+            dp[i][m-1]=grid[i][m-1]+dp[i+1][m-1];
+        }
+        for(int i=m-2;i>=0;i--){
+            dp[n-1][i]=grid[n-1][i]+dp[n-1][i+1];
+        }
+        for(int i=n-2;i>=0;i--){
+            for(int j=m-2;j>=0;j--){
+                dp[i][j]=min(dp[i][j+1],dp[i+1][j])+grid[i][j];
             }
         }
-        return dp[n-1][m-1];
+        return dp[0][0];
     }
 };
