@@ -18,6 +18,8 @@ public:
         for(int i=n-3;i>=0;i--){
             dp[i]= max(nums[i]+dp[i+2], dp[i+1]);
         }
+        // final subproblem
+        // dp[0] = max sum from 0th element to last element
         return dp[0];
     }
 };
