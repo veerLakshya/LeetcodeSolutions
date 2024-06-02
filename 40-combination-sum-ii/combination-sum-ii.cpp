@@ -2,25 +2,25 @@ class Solution {
 public:
     vector<int> curr_ans;
     vector<vector<int>> all_ans;
-    void backtrack(int index, int target, vector<int>& freq){
+    int freq[51];
+    void backtrack(int index, int target){
         if(target==0){
             all_ans.push_back(curr_ans);
             return;
         }
-        if(index==freq.size() || target<index)return;
-        backtrack(index+1,target,freq);
+        if(index==51 || target<index)return;
+        backtrack(index+1,target);
         if(freq[index]){
             freq[index]--;
             curr_ans.push_back(index);
-            backtrack(index,target-index,freq);
+            backtrack(index,target-index);
             curr_ans.pop_back();
             freq[index]++;
         }
     }
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-    vector<int> freq (51,0);
         for(auto &i:candidates)freq[i]++;
-        backtrack(1,target,freq);
+        backtrack(1,target);
         return all_ans;
     }
 };
