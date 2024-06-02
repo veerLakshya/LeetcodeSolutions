@@ -1,23 +1,21 @@
 class Solution {
 public:
     int n;
-    vector<vector<int>> all_ans;
-    vector<int> ans;
-    void helper(int start, int curr_sum, int target,vector<int> nums ){
-        if(curr_sum>target )return;
-        if(curr_sum==target){
-            all_ans.push_back(ans);
+    vector<vector<int>> combinations;
+    vector<int> currSubset;
+    void backtrack(int index, int target,vector<int>& candidates){
+        if(target==0){
+            combinations.push_back(currSubset);
             return;
         }
-        for(int i=start;i<n;i++){
-            ans.push_back(nums[i]);
-            helper(i, curr_sum+nums[i],target,nums);
-            ans.pop_back();
-        }
+        if(index==candidates.size()||target<0)return;
+        backtrack(index+1,target,candidates);
+        currSubset.push_back(candidates[index]);
+        backtrack(index,target-candidates[index],candidates);
+        currSubset.pop_back();
     }
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        n=candidates.size();
-        helper(0, 0,target,candidates);
-        return all_ans;
+       backtrack(0,target,candidates);
+       return combinations;
     }
 };
