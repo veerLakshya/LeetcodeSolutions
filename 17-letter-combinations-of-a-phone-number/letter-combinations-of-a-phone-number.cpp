@@ -9,9 +9,7 @@ public:
         }
         string st = pad[digits[index] - '0'];
         for(auto i:st){
-            current.push_back(i);
-            helper(index+1,digits,current);
-            current.pop_back();
+            helper(index+1,digits,current+i);
         }
     }
     vector<string> letterCombinations(string digits) {
