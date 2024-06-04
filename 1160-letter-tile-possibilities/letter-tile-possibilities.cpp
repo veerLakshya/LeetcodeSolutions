@@ -1,27 +1,24 @@
 class Solution {
 public:
     int n;
-    vector<string> ans;
-    int helper(int size, string tiles,vector<int>& freq){
-        int res=0;
-        for(int i=0;i<26;i++){
-            if(freq[i]>0){
-                res++;
-                freq[i]--;
-                res+=helper(size+res,tiles,freq);
-                freq[i]++;
+    set<string>s;
+    void helper(vector<int> &vis, string& curr, string &tiles){
+        for(int i=0;i<n;i++){
+            if(vis[i]==0){
+                s.insert(curr+tiles[i]);
+                vis[i]=1;
+                curr+=tiles[i];
+                helper(vis,curr,tiles);
+                curr.pop_back();
+                vis[i]=0;
             }
         }
-        return res;
     }
     int numTilePossibilities(string tiles) {
         n=tiles.size();
-        vector<int> freq(26,0);
-        for(auto i:tiles){
-            freq[i-'A']++;
-        }
-        for(auto i:freq)cout<<i<<" ";
-        return helper(0,tiles,freq);
-        // return ans.size();
+        vector<int> vis(n,0);
+        string curr="";
+        helper(vis, curr, tiles);
+        return s.size();
     }
 };
