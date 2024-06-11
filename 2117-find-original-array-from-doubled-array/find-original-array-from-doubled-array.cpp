@@ -1,6 +1,8 @@
 class Solution {
 public:
     vector<int> findOriginalArray(vector<int>& changed) {
+        ios_base::sync_with_stdio(false); 
+    cin.tie(NULL);   
         vector<int> ans;
         if(changed.size()==0 || changed.size()==1 || changed.size()%2)return ans;
         multiset<int> pos,neg;
