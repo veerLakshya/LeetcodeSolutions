@@ -11,7 +11,6 @@ public:
             if(i>=k && grumpy[i-k]==1)unsatisfied-=customers[i-k];
             if(i>=k-1)maxi = max(maxi,unsatisfied);
         }
-        cout<< ans<<" "<<maxi;
         return ans+maxi;
     }
 };
