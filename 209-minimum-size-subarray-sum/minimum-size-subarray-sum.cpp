@@ -8,7 +8,7 @@ public:
             dq.push_back(nums[i]);
             if(sum >= target){
                 do{
-                cout<<"sum: "<<sum<<" size: "<<dq.size()<<endl;
+                // cout<<"sum: "<<sum<<" size: "<<dq.size()<<endl;
                     ans = min( ans, (int)dq.size() );
                     sum -= dq.front();
                     dq.pop_front();
