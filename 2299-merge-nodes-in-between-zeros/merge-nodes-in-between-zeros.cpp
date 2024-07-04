@@ -11,26 +11,20 @@
 class Solution {
 public:
     ListNode* mergeNodes(ListNode* head) {
-        ListNode* curr = head->next;
-        ListNode* prevZero = head;
+        ListNode* dummy = new ListNode;
+        ListNode* temp = dummy;
         int sum = 0;
-        while(curr != nullptr){
+        ListNode* curr = head->next;
+        while(curr!=NULL){
             if(curr->val == 0){
-                prevZero->val = sum;
-                prevZero->next = curr;
-                prevZero = curr;
-                sum = 0;
-                // if(curr->next == nullptr){
-                // }
+                ListNode* newnode = new ListNode(sum);
+                temp->next = newnode;
+                sum=0;
+                temp = temp->next;
             }
             sum += curr->val;
             curr = curr->next;
         }
-        curr = head;
-        while(curr->next->val !=0){
-            curr = curr->next;
-        }
-        curr->next = nullptr;
-        return head;   
+        return dummy->next;
     }
 };
