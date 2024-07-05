@@ -11,7 +11,6 @@
 class Solution {
 public:
     vector<int> nodesBetweenCriticalPoints(ListNode* head) {
-        // vector<int> ans;
         if(!head || !head->next || !head->next->next) return {-1,-1};
         ListNode* curr = head->next;
         int prev = head->val;
@@ -27,8 +26,7 @@ public:
         if(curr == NULL ||curr->next == NULL)return {-1,-1};
         prev = curr->val;
         curr = curr->next;
-        int maxi = 0, mini = INT_MAX;
-        int ind = 0, last = 0;
+        int mini = INT_MAX, ind = 0, last = 0;
         while(curr->next!=NULL){
             ind++;
             int x = curr->val;
@@ -37,11 +35,9 @@ public:
                 mini= min(mini, ind - last);
                 last = ind;
             }
-                prev = x;
+            prev = x;
             curr = curr->next;
-            // cout<<"ind: "<<ind<<" last: "<<last<< " x: "<<x<<endl;
         }
-        maxi = last;
-        return {mini!=INT_MAX?mini:-1 , maxi!=0?maxi:-1}; 
+        return {mini!=INT_MAX?mini:-1 , last!=0?last:-1}; 
     }
 };
