@@ -1,13 +1,14 @@
 class Solution {
 public:
+    int helper(int n, vector<int>& dp){
+        if(n==1) return dp[n] = 1;
+        if(n==2) return dp[2] = 2;
+        if(dp[n]!=-1) return dp[n];
+        return dp[n] = helper(n-1,dp)+helper(n-2,dp);
+    }
     int climbStairs(int n) {
-        int dp[n+1];
-        //dp[i] = number of paths to cell n
-        //dp[i] = dp[i-1] + d[i-2]
-        dp[0] = 1, dp[1] = 1;
-        for(int i = 2; i<=n; i++){
-            dp[i] = dp[i-1] + dp[i-2];
-        }
+        vector<int> dp (n+1, -1);
+        helper(n, dp);
         return dp[n];
     }
 };
