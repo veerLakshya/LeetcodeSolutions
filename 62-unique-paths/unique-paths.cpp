@@ -1,17 +1,15 @@
 class Solution {
 public:
+    long long dp[101][101];
+    long long helper(int i, int j){
+        if(i==0 && j==0) return dp[0][0] = 1;
+        if(i<0 || j<0) return 0;
+        if(dp[i][j] != -1) return  dp[i][j];
+        return dp[i][j] = helper(i-1, j) + helper(i, j-1);
+    }
     int uniquePaths(int m, int n) {
-        vector<vector<long long>> arr(m, vector<long long>(n,0));
-        arr[0][0]=1;
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(i==0&&j==0)continue;
-                else{
-                    if(i>0)arr[i][j]+= arr[i-1][j];
-                    if(j>0)arr[i][j]+= arr[i][j-1];
-                }
-            }
-        }
-        return arr[m-1][n-1];
+        memset(dp,-1, sizeof(dp));
+        helper(n,m);
+        return dp[n-1][m-1];
     }
 };
