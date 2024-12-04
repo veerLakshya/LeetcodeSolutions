@@ -12,8 +12,6 @@ public:
             str1[i] = str2[j];
 
         }
-        cout << i << " " << j << endl;
-        cout << str1 <<" "<< str2;
         if(j == m) return true;
         else return false;
     }
