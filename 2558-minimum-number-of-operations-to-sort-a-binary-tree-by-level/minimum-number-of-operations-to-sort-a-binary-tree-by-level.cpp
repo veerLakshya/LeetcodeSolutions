@@ -31,11 +31,11 @@ public:
             }
             for(int i = 0; i < n; i++)
                 if(t[i]!=a[i]){
-                        x++;
-                        int cur = mp[t[i]]; //position of element to come at this place
-                        mp[a[i]] = cur;
-                        swap(a[i],a[cur]);
-                    }
+                    x++;
+                    int cur = mp[t[i]]; //position of element to come at this place
+                    mp[a[i]] = cur;
+                    swap(a[i],a[cur]);
+                }
             return x;
         };
 
