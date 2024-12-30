@@ -1,17 +1,23 @@
 class Solution {
 public:
+    int dp[(int)1e6 + 1];
+    int l, h, z, o, mod = 1e9 + 7;
+    int helper(int i){
+        if(dp[i] != -1) return dp[i];
+        if (i == 0) return 1;
+        int cur = 0;
+        if(i >= o) cur += helper(i - o);
+        cur %= mod;
+        if(i >= z) cur += helper(i - z);
+        cur %= mod;
+        return dp[i] = cur;
+    }
     int countGoodStrings(int low, int high, int zero, int one) {
-        vector<int> dp(high + 1, 0);
-        int mod = 1e9 + 7;
-        dp[0] = 1;
-        for(int i = 1; i <= high; i++){
-            if(i >= zero) dp[i] += (dp[i-zero]);
-            if(i >= one) dp[i] += (dp[i-one]);
-            dp[i] %= mod;
-        }
+        l = low, h = high, z = zero, o = one;
+        memset(dp, -1, sizeof (dp));
         int ans = 0;
-        for(int i = 0; i < high; i++) cout<<dp[i]<<" ";
-        for(int i = low; i <= high; i++) ans += dp[i], ans %= mod;
+        // helper(high);
+        for(int i = low; i <= high; i++) ans += helper(i), ans %= mod;
         return ans;
     }
 };
