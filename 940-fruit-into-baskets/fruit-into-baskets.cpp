@@ -8,8 +8,7 @@ public:
                 mp[fruits[r]]++;
                 r++;
             }
-            int cur = 0;
-            for(auto i: mp) cur += i.second;
+            int cur = r - i;
             ans = max(ans, cur);
             mp[fruits[i]]--;
             if(mp[fruits[i]] == 0) mp.erase(fruits[i]);
