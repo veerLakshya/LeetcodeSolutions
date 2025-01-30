@@ -16,10 +16,8 @@ public:
                         if (vis[u] == -1) {
                             vis[u] = vis[v] ^ 1;
                             q.push(u);
-                        } else {
-                            is_bipartite &= (vis[u] != vis[v]);
-                            if(!is_bipartite)return false;
-                        }
+                        } 
+                        else if (vis[u] == vis[v]) return false;
                     }
                 }
             }
