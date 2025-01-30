@@ -3,7 +3,6 @@ public:
     bool isBipartite(vector<vector<int>>& graph) {
         int n = graph.size();
         vector<int> vis(n, -1);
-        bool is_bipartite = true;
         queue<int> q;
         for (int st = 0; st < n; ++st) {
             if (vis[st] == -1) {
