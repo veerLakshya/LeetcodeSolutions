@@ -1,24 +1,23 @@
 class Solution {
 public:
     // Function to check if the graph is bipartite
-    bool isBipartite(vector<vector<int>>& graph) {
+    bool isBipartite(vector<vector<int>>& graph, vector<int>& color) {
         int n = graph.size();
-        vector<int> vis(n, -1);
-        queue<int> q;
-        
         for (int st = 0; st < n; ++st) {
-            if (vis[st] == -1) {
+            if (color[st] == -1) { // Unvisited node
+                queue<int> q;
                 q.push(st);
-                vis[st] = 0;
+                color[st] = 0; // Start coloring
+                
                 while (!q.empty()) {
                     int v = q.front();
                     q.pop();
                     for (int u : graph[v]) {
-                        if (vis[u] == -1) {
-                            vis[u] = vis[v] ^ 1;
+                        if (color[u] == -1) {
+                            color[u] = color[v] ^ 1; // Alternate color
                             q.push(u);
                         } 
-                        else if (vis[u] == vis[v]) return false; // Odd cycle detected
+                        else if (color[u] == color[v]) return false; // Odd cycle detected
                     }
                 }
             }
@@ -26,38 +25,38 @@ public:
         return true;
     }
 
-    // BFS to find the maximum depth starting from a given node
-    int bfsMaxDepth(int start, vector<vector<int>>& edj) {
+    // BFS to find max layered depth starting from 'start' node
+    int maxLayeredBFS(int start, vector<vector<int>>& edj) {
         queue<int> q;
-        unordered_map<int, int> depth;
+        vector<int> level(edj.size(), -1);
         q.push(start);
-        depth[start] = 1;
-        int maxDepth = 1;
+        level[start] = 1;
+        int maxLayers = 1;
 
         while (!q.empty()) {
             int node = q.front();
             q.pop();
             for (int neighbor : edj[node]) {
-                if (depth.find(neighbor) == depth.end()) {
-                    depth[neighbor] = depth[node] + 1;
-                    maxDepth = max(maxDepth, depth[neighbor]);
+                if (level[neighbor] == -1) {
+                    level[neighbor] = level[node] + 1;
+                    maxLayers = max(maxLayers, level[neighbor]);
                     q.push(neighbor);
                 }
             }
         }
-        return maxDepth;
+        return maxLayers;
     }
 
     int magnificentSets(int n, vector<vector<int>>& edges) {
         vector<vector<int>> edj(n);
-        for (auto i : edges) {
-            int x = i[0] - 1; 
-            int y = i[1] - 1;
+        for (auto& edge : edges) {
+            int x = edge[0] - 1, y = edge[1] - 1;
             edj[x].push_back(y);
             edj[y].push_back(x);
         }
         
-        if (!isBipartite(edj)) return -1; // Check if the graph contains an odd-length cycle
+        vector<int> color(n, -1);
+        if (!isBipartite(edj, color)) return -1; // Check if the graph contains an odd-length cycle
 
         int maxOverallDepth = 0;
         vector<bool> visited(n, false);
@@ -84,10 +83,10 @@ public:
                     }
                 }
 
-                // Find the best depth starting from any node in this component
+                // Find the best depth using layered BFS
                 int maxDepth = 0;
                 for (int node : component) {
-                    maxDepth = max(maxDepth, bfsMaxDepth(node, edj));
+                    maxDepth = max(maxDepth, maxLayeredBFS(node, edj));
                 }
                 maxOverallDepth += maxDepth;
             }
