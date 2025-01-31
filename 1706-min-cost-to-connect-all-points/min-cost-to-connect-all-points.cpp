@@ -32,7 +32,6 @@ public:
 class Solution {
 public:
     int minCostConnectPoints(vector<vector<int>>& points) {
-        // unordered_map<pair<int,int>,int>> id;
         int n = points.size();
         vector<vector<int>> edj;
         for(int i = 0; i < n; i++){
