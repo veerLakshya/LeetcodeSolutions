@@ -6,16 +6,12 @@ public:
         for(auto i: queries){
             int ball = i[0];
             int col = i[1];
-            if(b.find(ball)==b.end()){
-                b[ball] = col;
-                mp[col]++;
-            }
-            else{
+            if(b.find(ball) != b.end()){
                 mp[b[ball]]--;
                 if(mp[b[ball]] == 0) mp.erase(b[ball]);
-                b[ball] = col;
-                mp[col]++;
             }
+            mp[col]++;
+            b[ball] = col;
             ans.push_back(mp.size());
         }
         return ans;
