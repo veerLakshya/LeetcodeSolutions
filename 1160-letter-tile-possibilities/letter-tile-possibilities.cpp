@@ -1,24 +1,21 @@
 class Solution {
 public:
+    set<string> ans;
     int n;
-    set<string>s;
-    void helper(vector<int> &vis, string& curr, string &tiles){
-        for(int i=0;i<n;i++){
-            if(vis[i]==0){
-                s.insert(curr+tiles[i]);
-                vis[i]=1;
-                curr+=tiles[i];
-                helper(vis,curr,tiles);
-                curr.pop_back();
-                vis[i]=0;
+    void h(string cur, string s,vector<int>& used){
+        for(int i = 0; i < n; i++){
+            if(!used[i]){
+                used[i] = 1;
+                ans.insert(cur + s[i]);
+                h(cur + s[i], s, used);
+                used[i] = 0;
             }
         }
     }
     int numTilePossibilities(string tiles) {
-        n=tiles.size();
-        vector<int> vis(n,0);
-        string curr="";
-        helper(vis, curr, tiles);
-        return s.size();
+        n = tiles.size();
+        vector<int> used(n, 0);
+        h("", tiles, used);
+        return ans.size();
     }
 };
