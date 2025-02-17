@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<vector<int>> ans;
     int n;
-    void helper(int ind, vector<int> cur, vector<int>& a){
+    void helper(int ind, vector<int>& cur, vector<int>& a){
         if(ind == n){
             ans.push_back(cur);
             return;
@@ -10,6 +10,7 @@ public:
         helper(ind + 1, cur, a);
         cur.push_back(a[ind]);
         helper(ind + 1, cur, a);
+        cur.pop_back();
     }
     vector<vector<int>> subsets(vector<int>& nums) {
         n = nums.size();
