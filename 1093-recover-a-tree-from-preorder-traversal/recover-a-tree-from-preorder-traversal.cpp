@@ -14,10 +14,13 @@ public:
     int n;
     TreeNode* helper(string& s, int& ind, int d){
         if(ind >= n) return nullptr;
-        int i = ind;
-        while(i < n && s[i] == '-') i++;
-        int level = i - ind;
+
+        int level = 0;
+
+        while(ind + level < n && s[ind + level] == '-') level++;
+
         if (level != d) return nullptr;
+        
         ind += level;
         int num = 0;
         while(ind < n && s[ind] != '-'){
