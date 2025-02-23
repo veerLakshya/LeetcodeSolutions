@@ -2,35 +2,23 @@ class Solution {
 public:
     TreeNode* constructFromPrePost(vector<int>& preorder,
                                    vector<int>& postorder) {
-        int n = preorder.size();
-        return h(0, n - 1, 0, preorder, postorder);
+        int i = 0, j = 0;
+        return h(i, j, preorder, postorder);
     }
 
 private:
-    TreeNode* h(int i, int j, int postStart, vector<int>& pre,
-                vector<int>& post) {
-        if (i > j)
-            return NULL;
-
-        if (i == j) {
-            return new TreeNode(pre[i]);
-        }
-
-        int leftRoot = pre[i + 1];
-
-        int leftNodes = 1;
-        while (post[postStart + leftNodes - 1] != leftRoot) {
-            leftNodes++;
-        }
-
+    TreeNode* h(int& i, int& j, vector<int>& pre, vector<int>& post) {
         TreeNode* root = new TreeNode(pre[i]);
+        i++;
 
-        root->left =
-            h(i + 1, i + leftNodes, postStart, pre, post);
+        if (root->val != post[j]) {
+            root->left = h(i, j, pre, post);
+        }
 
-        root->right = h(i + leftNodes + 1, j,
-                        postStart + leftNodes, pre, post);
-
+        if (root->val != post[j]) {
+            root->right = h(i, j, pre, post);
+        }
+        j++;
         return root;
     }
 };
