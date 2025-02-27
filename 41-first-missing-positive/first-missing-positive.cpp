@@ -1,14 +1,12 @@
 class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
-        set<int> st;
-        for(int i=0;i<nums.size();i++)
-        st.insert(nums[i]);
-        for(int i=1;i<=nums.size();i++)
-        {
-            if(st.find(i)==st.end())return i;
+        int n = nums.size();
+        vector<int> freq(n+1, 0);
+        for(auto i: nums) if(i >= 0 && i <= n) freq[i]++;
+        for(int i = 1; i <= n; i++){
+            if(!freq[i]) return i;
         }
-        return *st.rbegin()+1;
-        
+        return n+1;
     }
 };
