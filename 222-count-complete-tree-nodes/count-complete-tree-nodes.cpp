@@ -11,13 +11,32 @@
  */
 class Solution {
 public:
+    int lheight(TreeNode* root){
+        if(!root) return 0;
+        int h = 0;
+        while(root){
+            h++;
+            root = root->left;
+        }
+        return h;
+    }
+    int rheight(TreeNode* root){
+        if(!root) return 0;
+        int h = 0;
+        while(root){
+            h++;
+            root = root->right;
+        }
+        return h;
+    }
+    int h(TreeNode* root){
+        if(!root) return 0;
+        int lh = lheight(root);
+        int rh = rheight(root);
+        if(lh == rh) return ((1<<lh) - 1);
+        return 1 + h(root->left) + h(root->right);
+    }
     int countNodes(TreeNode* root) {
-        auto dfs = [&](TreeNode* root, auto self)->int{
-            if(!root) return 0;
-            int l = self(root->left, self);
-            int r = self(root->right, self);
-            return l+r+1;
-        };
-        return dfs(root, dfs);
+        return h(root);
     }
 };
