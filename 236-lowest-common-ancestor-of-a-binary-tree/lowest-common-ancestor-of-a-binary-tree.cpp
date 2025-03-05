@@ -9,29 +9,21 @@
  */
 class Solution {
 public:
-    bool hasPath(TreeNode* root, vector<TreeNode*>& arr, int x) {
-        if (!root)
-            return false;
-
-        arr.push_back(root);
-        if (root->val == x)
-            return true;
-
-        if (hasPath(root->left, arr, x) || hasPath(root->right, arr, x))
-            return true;
-        arr.pop_back();
+    bool dfs(TreeNode* root, TreeNode* tar, vector<TreeNode*>& path){
+        if(!root) return false;
+        path.push_back(root);
+        if(root == tar) return true;
+        else if(dfs(root->left, tar, path) || dfs(root->right, tar, path)) return true;
+        path.pop_back();
         return false;
     }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        vector<TreeNode*> pathp,pathq;
-        hasPath(root, pathp,p->val );
-        hasPath(root, pathq,q->val );
-        for(auto i: pathp)cout<<i->val<<" ";
-        cout<<endl;
-        for(auto i: pathq)cout<<i->val<<" ";
-        for(int i = 1; i<min(pathp.size(),pathq.size());i++){
-            if(pathp[i]!=pathq[i])return pathp[i-1];
+        vector<TreeNode*> pathp, pathq;
+        dfs(root, p, pathp);
+        dfs(root, q, pathq);
+        for(int i = min(pathp.size(), pathq.size()) - 1; i >= 0; i--){
+            if(pathp[i] == pathq[i]) return pathp[i];
         }
-        return pathp.size()>pathq.size() ? pathq[pathq.size()-1]:pathp[pathp.size()-1];
+        return NULL;
     }
 };
