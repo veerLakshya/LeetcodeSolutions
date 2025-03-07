@@ -11,9 +11,6 @@ public:
                 }
             }
         }
-        // for(int i = 1; i <= right; i++){
-        //     cout << i <<" :"<<isPrime[i]<<endl;
-        // }
         vector<int> ans(2,-1);
         int mini = INT_MAX;
         for(int i = 1; i < primes.size(); i++){
