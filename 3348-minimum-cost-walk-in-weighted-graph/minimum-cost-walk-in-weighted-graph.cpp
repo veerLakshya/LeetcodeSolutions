@@ -30,7 +30,7 @@ public:
     vector<int> minimumCost(int n, vector<vector<int>>& edges,
                             vector<vector<int>>& query) {
         UnionFind dsu(n);
-        vector<int> cost(n, -1);
+        vector<int> cost(n,-1); // as binary of -1 is all 1s
         for(auto i: edges){
             dsu.merge(i[0],i[1]);
         }
