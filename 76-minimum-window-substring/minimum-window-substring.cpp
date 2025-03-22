@@ -10,23 +10,25 @@ public:
         int n = s.size(), cnt = t.size();
         int ans = INT_MAX, start_ind = 0;
 
-        while(right < n){
-            if(req[s[right]] > 0){
-                cnt--;
+        while(left < n){
+            while(right < n && cnt){
+                if(req[s[right]] > 0){
+                    cnt--;
+                }
+                req[s[right]]--;
+                right++;
             }
-            req[s[right]]--;
-            right++;
-            while(cnt == 0){
-                if(right - left < ans){
+            if(!cnt){
+                if(ans > right - left){
                     ans = right - left;
                     start_ind = left;
                 }
-                req[s[left]]++;
-                if(req[s[left]] > 0){
-                    cnt++;
-                }
-                left++;
             }
+            req[s[left]]++;
+            if(req[s[left]] > 0){
+                cnt++;
+            } 
+            left++;
         }
         return (ans == INT_MAX ? "" : s.substr(start_ind, ans));
     }
