@@ -1,19 +1,16 @@
 class Solution {
 public:
+    vector<string> ans;
     vector<string> generateParenthesis(int n) {
-        vector<string> ans;
-
-        auto h = [&](int i, int open, string s, auto self)->void{
-            if(i >= 2*n){
-                if(!open) ans.push_back(s);
+        function<void(int, string)> h = [&](int open, string cur)->void{
+            if(cur.size() == 2*n){
+                if(open == 0)ans.push_back(cur);
                 return;
             }
-            self(i + 1, open + 1, s + '(', self);
-            if(open) self(i + 1, open - 1, s + ')', self);
+            if(open) h(open - 1, cur + ')');
+            h(open+1, cur + '(');
         };
-
-        h(0, 0, "", h);
-
+        h(0, "");
         return ans;
     }
 };
