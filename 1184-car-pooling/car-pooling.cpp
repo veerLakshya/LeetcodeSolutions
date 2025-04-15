@@ -18,8 +18,9 @@ public:
             pas[i[2]] -= i[0];
             pas[i[1]] += i[0];
         }
-        for(int i = 1; i <= last; i++) pas[i] += pas[i-1];
-        for(int i = 0; i <= last; i++){
+        if(pas[0] > capacity) return false;
+        for(int i = 1; i <= last; i++){
+            pas[i] += pas[i-1];
             if(pas[i] > capacity) return false;
         }
         return true;
