@@ -1,24 +1,34 @@
 class Solution {
 public:
-    int h(int i, int j, vector<int>& a, vector<vector<int>>& dp){
-        if(i == a.size()) return 0;
-        if(dp[i][j] != -1) return dp[i][j];
-        if(j){
-            // since i own a stock, i can either sell or pass
-            int op1 = a[i] + h(i+1, !j, a, dp);
-            int op2 = h(i+1, j, a, dp);
-            return dp[i][j] = max(op1, op2);
+    int h(int ind, bool needtobuy, auto& a){
+        if(ind >= a.size()) return 0;
+        if(needtobuy){
+            int op1 = -a[ind] + h(ind + 1, 0, a);
+            int op2 = h(ind + 1, 1, a);
+            return max(op1, op2);
         }
         else{
-            int op1 = -a[i] + h(i+1, !j, a, dp);
-            int op2 = h(i+1, j, a, dp);
-            return dp[i][j] = max(op1, op2);
+            int op1 = a[ind] + h(ind + 1, 1, a);
+            int op2 = h(ind + 1, 0, a);
+            return max(op1, op2);
         }
         return 0;
     }
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        vector<vector<int>> dp(n, vector<int> (2,-1));
-        return h(0, 0, prices, dp);
+        vector<vector<int>> dp(n + 1, vector<int> (2, 0));
+        for(int i = 0; i < n; i++){
+            if(i == 0){
+                dp[i][0] = 0;
+                dp[i][1] = -prices[i];
+            }
+            else{
+                dp[i][0] = max(dp[i-1][0],prices[i] + dp[i-1][1]);
+                dp[i][1] = max(dp[i-1][1], dp[i-1][0]- prices[i]);
+            }
+        }
+        return dp[n-1][0];
+
+        // return h(0,1,prices);
     }
 };
