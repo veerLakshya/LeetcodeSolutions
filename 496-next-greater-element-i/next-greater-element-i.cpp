@@ -2,17 +2,22 @@ class Solution {
 public:
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
         int n = nums2.size();
-        vector<int> ng(1e4 + 2, -1);
-        stack<int> s;
-        for(int i = n - 1; i >= 0; i--){
-            if(s.size() != 0){
-                while(s.size() && s.top() < nums2[i]) s.pop();
-                if(s.size()) ng[nums2[i]] = s.top();
+        vector<int> a(100005,-1), ans;
+        stack<int> st;
+        st.push(nums2[n-1]);
+        for(int i = n - 2; i >= 0; i--){
+            if(st.size() && st.top() > nums2[i]){
+                a[nums2[i]] = st.top();
             }
-            s.push(nums2[i]);
+            else{
+                while(st.size() && st.top() < nums2[i]) st.pop();
+                if(st.size()) a[nums2[i]] = st.top();
+            }
+            st.push(nums2[i]);
         }
-        vector<int> ans;
-        for(auto i: nums1) ans.push_back(ng[i]);
+        for(auto i: nums1){
+            ans.push_back(a[i]);
+        }
         return ans;
     }
 };
