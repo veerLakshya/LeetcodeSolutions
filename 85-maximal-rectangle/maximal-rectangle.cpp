@@ -22,6 +22,7 @@ public:
                     a[i][j] += a[i - 1][j];
             }
         }
+        // considering a max rectangle formed till this level
         for (int i = 0; i < n; i++) {
             stack<int> st;
             for (int j = 0; j <= m; j++) {
