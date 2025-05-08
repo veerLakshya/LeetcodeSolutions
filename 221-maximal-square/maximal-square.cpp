@@ -2,33 +2,19 @@ class Solution {
 public:
     int maximalSquare(vector<vector<char>>& matrix) {
         int n = matrix.size(), m = matrix[0].size(), ans = 0;
-        vector<vector<int>> a(n, vector<int> (m, 0));
-        for(int j = 0; j < m; j++) a[0][j] = (matrix[0][j] == '1');
+        vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
 
-        for(int j = 0; j < m; j++){
-            for(int i = 1; i < n; i++){
-                if(matrix[i][j] == '0') continue;
-                else a[i][j] = 1 + a[i-1][j];
-            }
-        }
-        // print(a);
-        for(int i = 0; i < n; i++){
-            stack<int> st;
-            for(int j = 0; j <= m; j++){
-                while(st.size() && (j == m || a[i][st.top()] >= a[i][j])){
-                    int mid = st.top();
-                    st.pop();
-                    int l = (st.size() ? st.top() + 1 : 0);
-                    int r = j;
-                    int side = min((r - l), a[i][mid]);
-                    // cout << r - l << " " << a[i][mid] << endl;;
-                    // cout << mid << " smaller on:"<< l << endl;
-                    ans = max(ans, side*side);
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (matrix[i - 1][j - 1] == '1') {
+                    dp[i][j] =
+                        1 + min({dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]});
+                    ans = max(ans, dp[i][j]);
                 }
-                st.push(j);
+                // cout << dp[i][j] << " ";
             }
             // cout << endl;
         }
-        return ans;
+        return ans * ans;
     }
 };
