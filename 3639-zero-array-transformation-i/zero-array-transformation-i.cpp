@@ -8,11 +8,6 @@ public:
             r++;
             op[l] += 1;
             op[r] -= 1;
-            // cout <<l <<": " << op[l]<<"   " <<r <<": "<< op[r]<< endl;
-        }
-        for(int i = 0; i <= 5; i++){
-            // cout << op[i] << endl;
-            // op[i] += op[i-1];
         }
         for(int i = 0; i < nums.size(); i++){
             op[i] += (i > 0 ? op[i-1] : 0);
