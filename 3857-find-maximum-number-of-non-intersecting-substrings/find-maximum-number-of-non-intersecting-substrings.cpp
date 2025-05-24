@@ -10,9 +10,7 @@ public:
                 int prev = mp[word[i]];
                 if(i-prev+1 >= 4){
                     ans++;
-                    for(auto i: mp) cout << i.first << " ";
-                    cout << endl;
-                    mp = t;
+                    mp.clear();
                 }
             }
             else mp[word[i]]=i;
